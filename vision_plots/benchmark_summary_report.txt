@@ -1,0 +1,76 @@
+================================================================================
+VISION MODEL BENCHMARKING SUMMARY REPORT
+================================================================================
+
+Total benchmark runs: 29
+Models tested: 7
+Devices: Dell, Orin, Thor
+Precisions: bf16, fp16
+
+--------------------------------------------------------------------------------
+BEST PERFORMERS
+--------------------------------------------------------------------------------
+
+Top 3 - Tokens per Second:
+  Smolvlm2             on Dell       (bf16):    795.6 tok/s
+  Smolvlm2             on Dell       (fp16):    773.3 tok/s
+  Smolvlm2             on Thor       (bf16):    554.1 tok/s
+
+Top 3 - Efficiency (Tokens/sec/Watt):
+  Smolvlm2             on Thor       (bf16):    18.78 tok/s/W
+  Smolvlm2             on Thor       (fp16):    18.70 tok/s/W
+  Smolvlm2             on Dell       (bf16):    18.55 tok/s/W
+
+Top 3 - Energy Efficiency (Lowest Joules/Token):
+  Smolvlm2             on Thor       (bf16):    0.051 J/tok
+  Smolvlm2             on Thor       (fp16):    0.051 J/tok
+  Smolvlm2             on Dell       (bf16):    0.052 J/tok
+
+--------------------------------------------------------------------------------
+MODEL-BY-MODEL BREAKDOWN
+--------------------------------------------------------------------------------
+
+Gemma3N:
+  Dell       bf16 : TPS=  72.4, RAM= 23.1GB, Eff= 2.82 tok/s/W, Energy= 0.347 J/tok
+  Thor       bf16 : TPS=  79.1, RAM= 25.8GB, Eff= 4.62 tok/s/W, Energy= 0.215 J/tok
+
+Internvl:
+  Dell       bf16 : TPS=  22.4, RAM= 20.6GB, Eff= 0.50 tok/s/W, Energy= 1.931 J/tok
+  Dell       fp16 : TPS=  22.9, RAM= 20.8GB, Eff= 0.51 tok/s/W, Energy= 1.902 J/tok
+  Thor       bf16 : TPS=  27.7, RAM= 24.4GB, Eff= 0.88 tok/s/W, Energy= 1.145 J/tok
+  Thor       fp16 : TPS=  28.7, RAM= 25.0GB, Eff= 0.93 tok/s/W, Energy= 1.083 J/tok
+
+Internvl2 2B:
+  Orin       fp16 : TPS=  10.6, RAM= 18.9GB, Eff= 0.49 tok/s/W, Energy= 1.488 J/tok
+  Orin       fp16 : TPS=  10.7, RAM= 19.2GB, Eff= 0.49 tok/s/W, Energy= 1.491 J/tok
+
+Llava:
+  Dell       bf16 : TPS=  10.4, RAM= 26.6GB, Eff= 0.26 tok/s/W, Energy= 3.748 J/tok
+  Dell       fp16 : TPS=  10.4, RAM= 26.3GB, Eff= 0.26 tok/s/W, Energy= 3.758 J/tok
+  Thor       fp16 : TPS=  14.4, RAM= 25.5GB, Eff= 0.69 tok/s/W, Energy= 1.434 J/tok
+  Thor       bf16 : TPS=  11.5, RAM= 26.3GB, Eff= 0.57 tok/s/W, Energy= 1.749 J/tok
+
+Moondream2:
+  Dell       bf16 : TPS=  55.9, RAM= 12.0GB, Eff= 1.35 tok/s/W, Energy= 0.705 J/tok
+  Dell       fp16 : TPS=  55.9, RAM= 12.8GB, Eff= 1.34 tok/s/W, Energy= 0.706 J/tok
+  Orin       bf16 : TPS=  13.1, RAM= 12.2GB, Eff= 0.92 tok/s/W, Energy= 0.570 J/tok
+  Orin       fp16 : TPS=  12.9, RAM= 12.3GB, Eff= 0.93 tok/s/W, Energy= 0.572 J/tok
+  Thor       bf16 : TPS=  62.4, RAM= 24.9GB, Eff= 2.29 tok/s/W, Energy= 0.429 J/tok
+  Thor       fp16 : TPS=  62.5, RAM= 24.8GB, Eff= 2.29 tok/s/W, Energy= 0.429 J/tok
+
+Phi:
+  Dell       bf16 : TPS=  13.7, RAM= 25.8GB, Eff= 0.42 tok/s/W, Energy= 2.296 J/tok
+  Dell       fp16 : TPS=  13.7, RAM= 22.7GB, Eff= 0.43 tok/s/W, Energy= 2.271 J/tok
+  Orin       bf16 : TPS=   8.5, RAM= 23.9GB, Eff= 0.39 tok/s/W, Energy= 2.111 J/tok
+  Orin       fp16 : TPS=   8.3, RAM= 20.5GB, Eff= 0.40 tok/s/W, Energy= 2.050 J/tok
+  Thor       bf16 : TPS=  17.1, RAM= 25.6GB, Eff= 0.70 tok/s/W, Energy= 1.396 J/tok
+  Thor       fp16 : TPS=  16.8, RAM= 25.1GB, Eff= 0.69 tok/s/W, Energy= 1.410 J/tok
+
+Smolvlm2:
+  Dell       bf16 : TPS= 795.6, RAM= 13.2GB, Eff=18.55 tok/s/W, Energy= 0.052 J/tok
+  Dell       fp16 : TPS= 773.3, RAM= 13.2GB, Eff=18.03 tok/s/W, Energy= 0.053 J/tok
+  Orin       fp16 : TPS= 178.2, RAM= 12.3GB, Eff= 8.58 tok/s/W, Energy= 0.079 J/tok
+  Thor       bf16 : TPS= 554.1, RAM= 26.6GB, Eff=18.78 tok/s/W, Energy= 0.051 J/tok
+  Thor       fp16 : TPS= 542.7, RAM= 25.4GB, Eff=18.70 tok/s/W, Energy= 0.051 J/tok
+
+================================================================================
