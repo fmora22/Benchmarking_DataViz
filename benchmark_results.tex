@@ -1,0 +1,59 @@
+\begin{table*}[!t]
+\centering
+\caption{Performance metrics for compact VLMs across three edge systems. All models tested on 500 COCO validation images with 5 tasks per image (2500 total inferences). Each model tested with both fp16 and bf16 precision.}
+\label{tab:benchmark-results}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lcccccccccccc@{}}
+\toprule
+\textbf{Model} & \textbf{System} & \textbf{Dtype} & \textbf{Latency} & \textbf{Throughput} & \textbf{GPU} & \textbf{CPU} & \textbf{RAM} & \textbf{Power} & \textbf{Tokens/} & \textbf{TPS/} & \textbf{J/} & \textbf{Total} \\
+& & & \textbf{(ms)} & \textbf{(img/s)} & \textbf{(\%)} & \textbf{(\%)} & \textbf{(GB)} & \textbf{(W)} & \textbf{sec} & \textbf{Watt} & \textbf{Token} & \textbf{Tokens} \\
+\midrule
+gemma3n & Dell Pro Max & bf16 & 4700.7 & 0.221 & 73.0 & 3.2 & 23.1 & 25.7 & 72.4 & 2.82 & 0.35 & 869134 \\
+gemma3n & Dell Pro Max & fp16 & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- \\
+gemma3n & Jetson AGX Orin & bf16 & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- \\
+gemma3n & Jetson AGX Orin & fp16 & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- \\
+gemma3n & Jetson Thor & bf16 & 4385.4 & 0.238 & --- & 6.3 & 25.8 & 17.1 & 79.1 & 4.62 & 0.22 & 868897 \\
+gemma3n & Jetson Thor & fp16 & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- \\
+\midrule
+internvl & Dell Pro Max & bf16 & 2329.7 & 0.502 & 85.6 & 1.3 & 20.6 & 44.7 & 22.4 & 0.5 & 1.93 & 135809 \\
+internvl & Dell Pro Max & fp16 & 2279.7 & 0.51 & 85.3 & 1.3 & 20.8 & 45.0 & 22.9 & 0.51 & 1.9 & 135760 \\
+internvl & Jetson AGX Orin & bf16 & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- \\
+internvl & Jetson AGX Orin & fp16 & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- \\
+internvl & Jetson Thor & bf16 & 2657.6 & 0.449 & --- & 3.8 & 24.4 & 31.6 & 27.7 & 0.88 & 1.15 & 185571 \\
+internvl & Jetson Thor & fp16 & 2563.4 & 0.462 & --- & 3.9 & 25.0 & 31.0 & 28.7 & 0.93 & 1.08 & 185254 \\
+\midrule
+llava & Dell Pro Max & bf16 & 8072.1 & 0.186 & 91.7 & 1.5 & 26.6 & 39.3 & 10.4 & 0.26 & 3.75 & 211293 \\
+llava & Dell Pro Max & fp16 & 8073.6 & 0.186 & 91.5 & 1.5 & 26.3 & 39.4 & 10.4 & 0.26 & 3.76 & 211293 \\
+llava & Jetson AGX Orin & bf16 & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- \\
+llava & Jetson AGX Orin & fp16 & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- \\
+llava & Jetson Thor & bf16 & 7403.7 & 0.202 & --- & 4.1 & 26.3 & 20.2 & 11.5 & 0.57 & 1.75 & 213534 \\
+llava & Jetson Thor & fp16 & 7358.9 & 0.208 & --- & 4.1 & 25.5 & 20.7 & 14.4 & 0.69 & 1.43 & 264507 \\
+\midrule
+moondream2 & Dell Pro Max & bf16 & 953.6 & 1.118 & 79.5 & 1.5 & 12.0 & 41.5 & 55.9 & 1.35 & 0.7 & 141078 \\
+moondream2 & Dell Pro Max & fp16 & 951.7 & 1.12 & 80.3 & 1.5 & 12.8 & 41.6 & 55.9 & 1.34 & 0.71 & 140952 \\
+moondream2 & Jetson AGX Orin & bf16 & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- \\
+moondream2 & Jetson AGX Orin & fp16 & --- & --- & --- & --- & --- & --- & --- & --- & --- & --- \\
+moondream2 & Jetson Thor & bf16 & 894.6 & 1.19 & --- & 5.5 & 24.9 & 27.2 & 0 & 0.0 & 0.43 & 140867 \\
+moondream2 & Jetson Thor & fp16 & 894.4 & 1.19 & --- & 5.4 & 24.8 & 27.2 & 0 & 0.0 & 0.43 & 141002 \\
+\midrule
+phi & Dell Pro Max & bf16 & 7739.1 & 0.147 & 56.1 & 2.5 & 25.8 & 32.4 & 13.7 & 0.42 & 2.3 & 267371 \\
+phi & Dell Pro Max & fp16 & 7680.1 & 0.149 & 55.8 & 2.6 & 22.7 & 32.3 & 13.7 & 0.43 & 2.27 & 266948 \\
+phi & Jetson AGX Orin & bf16 & 9305.1 & 0.112 & --- & 5.6 & 21.8 & 0 & 8.6 & 0 & 0.0 & 243359 \\
+phi & Jetson AGX Orin & fp16 & 9536.1 & 0.109 & --- & 5.2 & 19.5 & 21.5 & 8.4 & 0.39 & 2.09 & 243597 \\
+phi & Jetson Thor & bf16 & 6206.2 & 0.179 & --- & 4.7 & 25.6 & 24.5 & 17.1 & 0.7 & 1.4 & 267231 \\
+phi & Jetson Thor & fp16 & 6273.5 & 0.176 & --- & 4.4 & 25.1 & 24.4 & 16.8 & 0.69 & 1.41 & 266573 \\
+\midrule
+smolvlm2 & Dell Pro Max & bf16 & 1419.5 & 0.789 & 78.8 & 1.5 & 13.2 & 42.9 & 795.7 & 18.55 & 0.05 & 2957026 \\
+smolvlm2 & Dell Pro Max & fp16 & 1462.9 & 0.765 & 79.6 & 1.5 & 13.2 & 42.9 & 773.3 & 18.03 & 0.05 & 2961196 \\
+smolvlm2 & Jetson AGX Orin & bf16 & 4554.1 & 0.233 & --- & 7.0 & 13.5 & 21.1 & 179.5 & 8.51 & 0.08 & 2956708 \\
+smolvlm2 & Jetson AGX Orin & fp16 & 4430.9 & 0.241 & --- & 4.9 & 13.1 & 20.8 & 183.2 & 8.82 & 0.08 & 2961306 \\
+smolvlm2 & Jetson Thor & bf16 & 2078.7 & 0.507 & --- & 3.8 & 26.6 & 29.5 & 554.1 & 18.78 & 0.05 & 2956750 \\
+smolvlm2 & Jetson Thor & fp16 & 2126.0 & 0.497 & --- & 3.5 & 25.4 & 29.0 & 542.7 & 18.7 & 0.05 & 2961161 \\
+\bottomrule
+\end{tabular}%
+}
+\begin{flushleft}
+\footnotesize
+\textbf{Metrics:} Latency = mean per-image inference time. Throughput = images per second. GPU\% = average GPU compute utilization (via pynvml on Dell Pro Max; not available on Jetson devices). CPU\% = average CPU utilization. RAM = average system memory used. Power = average power draw (Jetson devices use tegrastats GPU+SOC, Dell uses pynvml GPU power). Tokens/sec = total tokens / duration. TPS/Watt = efficiency (Tokens/sec per Watt). J/Token = energy cost. --- = Not tested or not available.
+\end{flushleft}
+\end{table*}
