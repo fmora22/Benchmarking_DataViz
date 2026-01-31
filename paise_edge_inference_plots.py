@@ -122,7 +122,7 @@ def load_run_data(device_dir, model_name, run_dir):
 def extract_comprehensive_metrics():
     """Extract memory, latency, energy, token counts for all runs."""
     all_data = []
-    seen_configs = set()  # Track (device, model, precision) to avoid duplicates
+    latest_runs = {}  # Track (device, model, precision) -> (timestamp, data)
     
     for device_key, device_name in DEVICE_NAMES.items():
         device_dir = BASE_DIR / device_key
@@ -141,11 +141,6 @@ def extract_comprehensive_metrics():
                 
                 precision = 'FP16' if 'fp16' in run_name else 'BF16'
                 
-                # Skip if we've already processed this config
-                config_key = (device_name, normalize_model_name(model_name), precision)
-                if config_key in seen_configs:
-                    continue
-                seen_configs.add(config_key)
                 summary_file = run_path / 'summary.json'
                 if not summary_file.exists():
                     continue
@@ -196,9 +191,17 @@ def extract_comprehensive_metrics():
                     'gpu_mem_gb': np.max(mems) if mems else 0,
                     'power_watts': np.mean(powers) if powers else 0,
                     'power_std': np.std(powers) if powers else 0,
+                    'run_timestamp': run_name,  # For deduplication
                 })
     
-    return pd.DataFrame(all_data)
+    # Keep only the latest run per (device, model, precision)
+    df = pd.DataFrame(all_data)
+    if len(df) > 0:
+        df = df.sort_values('run_timestamp')
+        df = df.drop_duplicates(subset=['device', 'model', 'precision'], keep='last')
+        df = df.drop('run_timestamp', axis=1)
+    
+    return df
 
 
 def plot_1_memory_bottleneck():
@@ -320,20 +323,17 @@ def plot_3_energy_stability():
         return
     
     # Calculate energy per token
-    # Note: Some runs don't have gen_len/input_len; for those, use latency_ms * power_watts directly
+    # For all runs: use total energy (latency_ms * power_watts)
+    # This is comparable across all models since token counts vary
     df['joules_total'] = (df['latency_ms'] / 1000) * df['power_watts']
-    
-    # For runs with gen_len, also calculate per-token; use whichever is available
-    df['joules_per_token'] = df.apply(
-        lambda row: (row['joules_total'] / row['gen_len']) if row['gen_len'] > 0 else row['joules_total'],
-        axis=1
-    )
-    df['joules_per_token'] = df['joules_per_token'].replace([np.inf, -np.inf], np.nan)
     
     # Use ALL models, filter out only where power_watts is unavailable
     energy_filtered = df[df['power_watts'] > 0]
-    energy_filtered = energy_filtered.dropna(subset=['joules_per_token'])
-    energy_filtered = energy_filtered[energy_filtered['joules_per_token'] > 0]
+    energy_filtered = energy_filtered.dropna(subset=['joules_total'])
+    energy_filtered = energy_filtered[energy_filtered['joules_total'] > 0]
+    
+    # Rename for plot
+    energy_filtered['joules_per_token'] = energy_filtered['joules_total']
     
     if len(energy_filtered) == 0:
         print("  ⚠ No valid energy data after filtering")
@@ -386,8 +386,8 @@ def plot_3_energy_stability():
     if len(tick_positions) > 0:
         ax.set_xticks(tick_positions)
         ax.set_xticklabels(tick_labels, fontsize=8)
-        ax.set_ylabel('Energy per Token (J/tok) or Total Energy (J)', fontsize=12, fontweight='bold')
-        ax.set_title('Energy Efficiency + Power Stability: All Models\n"Colorblind-friendly palette; Per-token where available, total energy otherwise; Error bands show power draw variability"',
+        ax.set_ylabel('Energy Consumption (J)', fontsize=12, fontweight='bold')
+        ax.set_title('Energy Efficiency + Power Stability: All Models\n"Colorblind-friendly palette; Error bands show power draw variability"',
                      fontsize=13, fontweight='bold', pad=20)
         ax.grid(True, alpha=0.3, axis='y')
         
