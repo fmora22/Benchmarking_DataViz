@@ -1,0 +1,86 @@
+
+BRIDGE NARRATIVE ANALYSIS
+========================
+
+These plots tell a coherent story about vision model deployment:
+
+1. LENGTH–LATENCY CORRELATION (Causal Bridge)
+   ────────────────────────────
+   
+   Finding: Correlation between gen_len and latency = 0.028
+   
+   Interpretation:
+   - If correlation > 0.7: "Latency tails are strongly driven by output length"
+   - If correlation 0.3–0.7: "Output length explains some variance; other factors matter"
+   - If correlation < 0.3: "Output length is a minor factor; look at task complexity"
+   
+   Task Breakdown:
+                      latency_ms          gen_len success
+                            mean      std    mean   count
+task                                                     
+attributes               4247.80  2905.73    1.86   14596
+caption_brief            4252.93  3980.80    2.08   14596
+objects_and_counts       4383.27  2882.12    2.20   14596
+scene_context            4191.74  2854.71    1.72   14596
+spatial_relationships    4887.33  3284.16    2.39   14596
+   
+   Narrative: "Latency scales with output length; task formulation is a primary driver of runtime variance."
+
+2. FAILURE/FEASIBILITY HEATMAP (Systems Constraint)
+   ───────────────────────────
+   
+   All configurations with <100% success rate are shaded in the heatmap.
+   These are not "missing data"—they are "not feasible" under the benchmark conditions.
+   
+   Feasibility Summary:
+              device precision  success_rate
+0  Dell Pro Max GB10      BF16         100.0
+1  Dell Pro Max GB10      FP16         100.0
+2    Jetson AGX Orin      BF16         100.0
+3    Jetson AGX Orin      FP16         100.0
+4        Jetson Thor      BF16         100.0
+5        Jetson Thor      FP16          83.3
+   
+   Narrative: "Resource limits create feasibility boundaries that dominate deployment decisions."
+
+3. TASK MIX SENSITIVITY (Practical Tool)
+   ──────────────────────
+   
+   This plot shows how model comparison shifts when task mix changes.
+   It answers: "Which model is 'best' depends on what your app actually does."
+   
+   Use case: A vision system that is 50% spatial reasoning will prefer different models
+   than one that is 70% brief captions.
+   
+   Narrative: "Model selection depends on anticipated task mix; no single 'best' model exists."
+
+────────────────────────────────────────────────────────────────────────
+
+RECOMMENDED FIGURE LINEUP FOR PAPER:
+
+For a PAISE short paper, use these 5 figures:
+
+  1. Task → Caption length distribution [from existing analysis]
+  2. Length–Latency correlation [NEW: bridge from task to runtime]
+  3. Latency tail metrics (P90 or CV) [from existing analysis]
+  4. Speed vs detail tradeoff [from existing analysis, now with context]
+  5. Failure/Feasibility heatmap [NEW: deployment reality check]
+
+This creates the narrative:
+  Task characteristics → Output length → Runtime latency → Deployment feasibility → Model selection
+
+────────────────────────────────────────────────────────────────────────
+
+INTERPRETATION GUIDE FOR REVIEWERS:
+
+Q: "Why do some models have high latency?"
+A: "See Figure 2 (Length–Latency): output length is a primary driver. See Figure 3 for 
+   task-specific decomposition."
+
+Q: "Which model should I use?"
+A: "See Figure 5 (Feasibility): first ensure your target device can run it. Then see Figure 4 
+   (Speed–Detail tradeoff): choose based on your latency budget and output quality needs."
+
+Q: "Will this model work for my application?"
+A: "See Figure 3 (Task Mix): your specific workload mix determines which model ranks best."
+

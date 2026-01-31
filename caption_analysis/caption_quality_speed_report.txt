@@ -33,8 +33,8 @@ Top 5 Most Detailed Captions (Longest):
 
 Top 5 Most Reliable (Highest Success Rate):
   1. Gemma3N              on Dell       (bf16): 100.0% success (2500 successful, 0 errors)
-  2. Internvl             on Dell       (bf16): 100.0% success (2500 successful, 0 errors)
-  3. Internvl             on Dell       (fp16): 100.0% success (2500 successful, 0 errors)
+  2. Internvl 2b          on Dell       (bf16): 100.0% success (2500 successful, 0 errors)
+  3. Internvl 2b          on Dell       (fp16): 100.0% success (2500 successful, 0 errors)
   4. Llava                on Dell       (bf16): 100.0% success (2500 successful, 0 errors)
   5. Llava                on Dell       (fp16): 100.0% success (2500 successful, 0 errors)
 
@@ -47,6 +47,6 @@ Top 5 Best Speed/Quality Balance:
   2. Moondream2           on Thor       (bf16):  894.6ms,  167.7 chars, score=0.647
   3. Moondream2           on Dell       (bf16):  953.6ms,  168.1 chars, score=0.644
   4. Moondream2           on Dell       (fp16):  951.7ms,  167.9 chars, score=0.644
-  5. Internvl             on Dell       (fp16): 2279.7ms,  224.6 chars, score=0.641
+  5. Internvl 2b          on Dell       (fp16): 2279.7ms,  224.6 chars, score=0.641
 
 ================================================================================

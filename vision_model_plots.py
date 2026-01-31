@@ -23,6 +23,13 @@ plt.rcParams['figure.dpi'] = 200
 plt.rcParams['savefig.dpi'] = 200
 
 
+def normalize_model_name(model_name):
+    """Normalize model names across devices (internvl and internvl2_2b → internvl_2b)."""
+    if model_name in ['internvl', 'internvl2_2b']:
+        return 'internvl_2b'
+    return model_name
+
+
 def read_json(p: Path):
     """Read JSON file."""
     with p.open("r", encoding="utf-8") as f:
@@ -118,7 +125,7 @@ def calculate_metrics(run_dir: Path):
     # Basic info
     model_key = meta.get('model_key', run_dir.parts[-2])
     model_id = meta.get('model_id', '')
-    model_name = extract_model_name(model_key, model_id)
+    model_name = normalize_model_name(extract_model_name(model_key, model_id))
     device = infer_device_label(run_dir)
     dtype = infer_dtype_short(meta.get('dtype', ''))
     

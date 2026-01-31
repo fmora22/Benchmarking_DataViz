@@ -79,6 +79,13 @@ def extract_model_name(model_key: str):
     return name
 
 
+def normalize_model_name(model_name: str):
+    """Normalize model names across devices (Internvl and Internvl2 2b → Internvl 2b)."""
+    if model_name in ['Internvl', 'Internvl2 2b']:
+        return 'Internvl 2b'
+    return model_name
+
+
 def find_run_dirs(roots):
     """Find all benchmark run directories."""
     run_dirs = []
@@ -105,7 +112,7 @@ def analyze_run(run_dir: Path):
     runs = load_runs_jsonl(run_dir / "runs.jsonl")
     
     model_key = meta.get('model_key', run_dir.parts[-2])
-    model_name = extract_model_name(model_key)
+    model_name = normalize_model_name(extract_model_name(model_key))
     device = infer_device_label(run_dir)
     dtype = infer_dtype_short(meta.get('dtype', ''))
     
