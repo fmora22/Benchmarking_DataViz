@@ -387,7 +387,7 @@ def plot_3_energy_stability():
         ax.set_xticks(tick_positions)
         ax.set_xticklabels(tick_labels, fontsize=8)
         ax.set_ylabel('Energy Consumption (J)', fontsize=12, fontweight='bold')
-        ax.set_title('Energy Efficiency + Power Stability: All Models\n"Colorblind-friendly palette; Error bands show power draw variability"',
+        ax.set_title('Energy Efficiency + Power Stability: All Models\n"\Error bands show power draw variability"',
                      fontsize=13, fontweight='bold', pad=20)
         ax.grid(True, alpha=0.3, axis='y')
         
